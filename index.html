@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B1B3D">
+<title>Liga Wolfsrudel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F5F9;--surface:#FFFFFF;--surface-2:#EDF0F6;--line:#DCE2ED;
+  --text:#0B1B3D;--muted:#55627E;--faint:#8792AA;
+  --gold:#A07A12;--gold-soft:#F5EBCF;--ice:#2A64A0;--ice-soft:#E2EDF8;
+  --glass:rgba(243,245,249,.86);
+  --shadow:0 1px 2px rgba(11,27,61,.06),0 8px 24px rgba(11,27,61,.07);
+  color-scheme:light;
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#070F22;--surface:#0E1C3A;--surface-2:#14264B;--line:#1E325D;
+    --text:#F2F4F8;--muted:#A6B1C8;--faint:#6F7D9C;
+    --gold:#E3B94A;--gold-soft:rgba(227,185,74,.15);--ice:#9DC0E0;--ice-soft:rgba(157,192,224,.14);
+    --glass:rgba(7,15,34,.82);
+    --shadow:0 10px 30px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#070F22;--surface:#0E1C3A;--surface-2:#14264B;--line:#1E325D;
+  --text:#F2F4F8;--muted:#A6B1C8;--faint:#6F7D9C;
+  --gold:#E3B94A;--gold-soft:rgba(227,185,74,.15);--ice:#9DC0E0;--ice-soft:rgba(157,192,224,.14);
+  --glass:rgba(7,15,34,.82);
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);z-index:40}
+button{font:inherit;color:inherit}
+.num{font-variant-numeric:tabular-nums}
+
+/* Kopfzeile */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.top-in{max-width:720px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px}
+.logo{width:38px;height:38px;border-radius:12px;background:#0B1B3D;display:grid;place-items:center;flex-shrink:0;box-shadow:0 4px 12px rgba(11,27,61,.25)}
+.logo svg{width:24px;height:24px}
+.brand b{display:block;font-weight:800;letter-spacing:-.02em;font-size:17px;line-height:1.15}
+.brand span{font-size:12px;color:var(--muted)}
+.spacer{flex:1}
+.demo{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ice);background:var(--ice-soft);padding:4px 8px;border-radius:999px}
+.mebtn{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px 12px 4px 4px;cursor:pointer;font-size:13px;font-weight:600;max-width:150px}
+.av{width:26px;height:26px;border-radius:50%;background:var(--gold-soft);color:var(--gold);display:grid;place-items:center;font-size:11px;font-weight:800;flex-shrink:0}
+.mebtn .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+main{max-width:720px;margin:0 auto;padding:18px 16px 120px}
+.view-in{animation:vin .35s ease both}
+@keyframes vin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.pt{font-size:28px;font-weight:800;letter-spacing:-.03em;margin:6px 0 4px}
+.pl{color:var(--muted);font-size:14.5px;margin:0 0 18px}
+.sh{display:flex;align-items:baseline;justify-content:space-between;gap:10px;font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:30px 2px 12px}
+.link{color:var(--gold);font-weight:700;font-size:13px;letter-spacing:0;text-transform:none;background:none;border:0;padding:0;cursor:pointer}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;border-radius:24px;padding:22px;color:#fff;background:radial-gradient(120% 90% at 100% 0%,rgba(227,185,74,.38),transparent 55%),linear-gradient(140deg,#0B1B3D 0%,#173A78 100%);box-shadow:0 18px 40px rgba(11,27,61,.28)}
+.hero::after{content:"";position:absolute;right:-50px;bottom:-70px;width:230px;height:230px;border-radius:50%;border:32px solid rgba(255,255,255,.05);pointer-events:none}
+.h-eb{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#E3B94A;display:flex;align-items:center;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:#E3B94A;animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(227,185,74,.6)}70%{box-shadow:0 0 0 9px rgba(227,185,74,0)}100%{box-shadow:0 0 0 0 rgba(227,185,74,0)}}
+.h-big{font-size:64px;font-weight:800;letter-spacing:-.04em;line-height:1;margin:12px 0 6px}
+.h-big small{font-size:18px;font-weight:600;letter-spacing:0;color:rgba(255,255,255,.6);margin-left:6px}
+.h-phase{font-size:15px;color:rgba(255,255,255,.88);position:relative;z-index:1}
+.prog{height:6px;background:rgba(255,255,255,.14);border-radius:99px;margin:18px 0 8px;overflow:hidden}
+.prog>div{height:100%;width:0;background:linear-gradient(90deg,#E3B94A,#F5D88A);border-radius:99px;transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
+.progl{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.65)}
+.mine-box{position:relative;z-index:1;margin-top:16px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:14px;padding:12px 14px;font-size:14.5px}
+.mine-box small{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:2px}
+.mine-box b{color:#E3B94A}
+
+/* Karten & Duelle */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow)}
+.match{padding:12px 14px 14px;margin-bottom:10px}
+.match.mine{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),var(--shadow)}
+.m-meta{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--faint);margin-bottom:10px;min-width:0}
+.m-stage{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.m-id{margin-left:auto;font-variant-numeric:tabular-nums;flex-shrink:0}
+.chip{font-size:10.5px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap;flex-shrink:0}
+.cg{background:var(--gold-soft);color:var(--gold)}.ci{background:var(--ice-soft);color:var(--ice)}.cn{background:var(--surface-2);color:var(--muted)}
+.m-row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:10px}
+.m-side{min-width:0;font-weight:600;font-size:15px}
+.m-side small{display:block;font-size:11.5px;color:var(--faint);font-weight:500}
+.m-side.r{text-align:right}
+.m-side .pn{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.m-side.w .pn{font-weight:800}
+.m-side.l{opacity:.5}
+.m-score{font-size:21px;font-weight:800;letter-spacing:-.02em;padding:4px 12px;border-radius:12px;background:var(--surface-2)}
+.m-score i{font-style:normal;color:var(--faint);margin:0 4px}
+.m-vs{font-size:11.5px;font-weight:800;color:var(--faint);padding:6px 12px;border-radius:12px;border:1px dashed var(--line);text-transform:uppercase;letter-spacing:.06em}
+.m-foot{margin-top:10px;font-size:12px;color:var(--ice);text-align:center}
+.pn.me::after{content:"Du";margin-left:6px;font-size:10px;font-weight:800;color:var(--gold);background:var(--gold-soft);padding:1px 6px;border-radius:99px;vertical-align:2px}
+
+/* Mini-Tabellen */
+.grid2{display:grid;gap:12px}
+@media(min-width:600px){.grid2{grid-template-columns:1fr 1fr}}
+.mini{padding:14px 16px 8px}
+.mini h3{margin:0 0 6px;display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:12px;color:var(--faint);font-weight:600}
+.mrow{display:flex;align-items:center;gap:10px;padding:9px 0;border-top:1px solid var(--line);font-size:14px}
+.mrow:first-of-type{border-top:0}
+.mrow .pn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+.mrow .pts{font-weight:800;min-width:28px;text-align:right}
+.mrow.me-row{background:var(--gold-soft);margin:0 -10px;padding:9px 10px;border-radius:10px;border-top-color:transparent}
+.rk{width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font-size:12px;font-weight:800;background:var(--surface-2);color:var(--muted);flex-shrink:0}
+.rk.g1{background:linear-gradient(135deg,#E3B94A,#F5D88A);color:#0B1B3D}
+
+/* Volle Tabellen */
+.tbl{overflow:hidden}
+.th,.tr{display:grid;grid-template-columns:30px minmax(0,1fr) repeat(4,28px) 40px;align-items:center;gap:4px;padding:10px 14px}
+.t2 .th,.t2 .tr{grid-template-columns:30px minmax(0,1fr) auto 56px}
+.t3 .th,.t3 .tr{grid-template-columns:30px minmax(0,1fr) auto}
+.th{font-size:10.5px;font-weight:800;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;padding-top:12px;padding-bottom:8px}
+.tr{border-top:1px solid var(--line);font-size:14px}
+.c{text-align:center;color:var(--muted)}.p{text-align:right;font-weight:800}
+.th .p{font-weight:800}
+.tr.me{background:var(--gold-soft)}
+.tr.cut{border-top:2px dashed var(--gold)}
+.nm{display:flex;align-items:center;min-width:0}
+.nm .pn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
+
+.seg{display:flex;background:var(--surface-2);border-radius:14px;padding:4px;gap:4px;margin:0 0 16px;overflow-x:auto;scrollbar-width:none}
+.seg::-webkit-scrollbar{display:none}
+.seg button{flex:1;border:0;background:none;padding:9px 12px;border-radius:10px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;white-space:nowrap;transition:background .2s,color .2s,box-shadow .2s}
+.seg button.on{background:var(--surface);color:var(--text);box-shadow:0 1px 3px rgba(11,27,61,.14)}
+.day{display:flex;align-items:center;gap:10px;margin:24px 2px 10px;scroll-margin-top:calc(env(safe-area-inset-top,0px) + 80px)}
+.day b{font-size:16px;font-weight:800;letter-spacing:-.01em}
+.day .ln{flex:1;height:1px;background:var(--line)}
+.note{padding:12px 14px;border-radius:14px;background:var(--ice-soft);font-size:13.5px;margin:12px 0}
+.note b{color:var(--ice)}
+.empty{padding:30px 20px;text-align:center;color:var(--muted);font-size:14.5px}
+.empty b{display:block;color:var(--text);font-size:16px;margin-bottom:4px}
+.btn{margin-top:14px;background:var(--text);color:var(--bg);border:0;border-radius:12px;padding:10px 16px;font-weight:700;cursor:pointer}
+
+/* Endstand */
+.podium{display:grid;grid-template-columns:1fr 1.15fr 1fr;align-items:end;gap:8px;margin-bottom:14px}
+.pod{text-align:center;padding:14px 8px;border-radius:18px;min-width:0}
+.pod.p1{padding:24px 8px 20px;border-color:var(--gold)}
+.medal{width:34px;height:34px;border-radius:50%;margin:0 auto 8px;display:grid;place-items:center;font-weight:800;font-size:14px}
+.m1{background:linear-gradient(135deg,#E3B94A,#F5D88A);color:#0B1B3D}.m2{background:#D5DAE3;color:#0B1B3D}.m3{background:#D8A46A;color:#3A220C}
+.pod .pn{display:block;font-weight:800;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rw{font-size:18px;font-weight:800;color:var(--gold);margin-top:4px}
+
+/* Regeln */
+.txt{padding:16px 18px;font-size:14.5px}
+.txt p{margin:0 0 8px}.txt p:last-child{margin:0}
+.txt ul{margin:0;padding-left:18px}.txt li{margin:6px 0}
+.tline{display:flex;height:12px;border-radius:99px;overflow:hidden;gap:3px;margin:4px 0 10px}
+.tlab{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted)}
+.steps{display:grid;gap:10px;margin-top:12px}
+.step{display:flex;gap:14px;padding:16px;align-items:flex-start}
+.step .n{width:32px;height:32px;border-radius:10px;background:var(--gold-soft);color:var(--gold);display:grid;place-items:center;font-weight:800;flex-shrink:0}
+.step b{display:block;font-size:15px}
+.step span{font-size:14px;color:var(--muted)}
+.upd{text-align:center;font-size:12px;color:var(--faint);margin-top:30px}
+
+/* Tab-Leiste */
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:6px 10px calc(6px + env(safe-area-inset-bottom,0px));background:var(--glass);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+.tabs{display:flex;max-width:520px;margin:0 auto}
+.tabbtn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;font-weight:700;color:var(--faint);background:none;border:0;padding:4px 0;cursor:pointer}
+.tabbtn .ic{display:flex;padding:4px 18px;border-radius:14px;transition:background .2s,color .2s}
+.tabbtn svg{width:22px;height:22px}
+.tabbtn.on{color:var(--text)}
+.tabbtn.on .ic{background:var(--gold-soft);color:var(--gold)}
+
+/* Auswahl-Sheet */
+.ov{position:fixed;inset:0;z-index:50;background:rgba(5,12,28,.55);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);display:flex;align-items:flex-end;justify-content:center;animation:fade .25s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.sheet{background:var(--surface);width:100%;max-width:520px;border-radius:24px 24px 0 0;padding:22px 20px calc(20px + env(safe-area-inset-bottom,0px));animation:up .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes up{from{transform:translateY(100%)}to{transform:none}}
+.sheet h2{margin:0;font-size:22px;font-weight:800;letter-spacing:-.02em}
+.sheet p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.names{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0 12px}
+.names button{padding:12px;border-radius:14px;border:1px solid var(--line);background:var(--surface-2);font-weight:700;font-size:14px;cursor:pointer;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.names button.on{border-color:var(--gold);background:var(--gold-soft)}
+.skip{width:100%;background:none;border:0;color:var(--muted);font-weight:600;padding:10px;cursor:pointer}
+
+/* Lade-Platzhalter & Effekte */
+.sk{border-radius:18px;background:linear-gradient(90deg,var(--surface-2) 0%,var(--line) 50%,var(--surface-2) 100%);background-size:200% 100%;animation:sh 1.2s infinite linear}
+@keyframes sh{to{background-position:-200% 0}}
+.rv{opacity:0;transform:translateY(14px);transition:opacity .55s ease var(--d,0ms),transform .55s cubic-bezier(.2,.8,.2,1) var(--d,0ms)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <div class="logo" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 3l7 6h8l7-6v11c0 7-5 12-11 15C10 26 5 21 5 14z" fill="#E3B94A"/><path d="M10.5 15.5l3.5 1-1.5 2.2zM21.5 15.5l-3.5 1 1.5 2.2zM14 23h4l-2 2.2z" fill="#0B1B3D"/></svg></div>
+  <div class="brand"><b>Wolfsrudel</b><span>Managerspiel · Saison 26/27</span></div>
+  <span class="spacer"></span>
+  <span class="demo" id="demo" hidden>Demo</span>
+  <button class="mebtn" id="mebtn" onclick="pickMe()" aria-label="Spieler auswählen"></button>
+</div></header>
+
+<main id="view"></main>
+
+<nav class="tabbar" aria-label="Hauptnavigation"><div class="tabs">
+  <button class="tabbtn" data-v="home" onclick="go('home')"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></span>Home</button>
+  <button class="tabbtn" data-v="spiele" onclick="go('spiele')"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></span>Spiele</button>
+  <button class="tabbtn" data-v="tabellen" onclick="go('tabellen')"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg></span>Tabellen</button>
+  <button class="tabbtn" data-v="regeln" onclick="go('regeln')"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.6v.4"/></svg></span>Regeln</button>
+</div></nav>
+
+<script>
+/* ===== Einstellungen ===== */
+// Hier den veröffentlichten CSV-Link aus Google Sheets einfügen. Leer = Demo-Daten.
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQsilYBPKl1PKQd-4XsMKpCr-VMLUngg9iRQx01HdKL72RYShBkvQRmTX7kLlcYrg/pub?gid=1174169531&single=true&output=csv";
+
+const NAMES=["dergruene","Kuehles1860","McCharls","HeftigerChris","waibelmane","Domi1993","Moe25","Simmal","HimbeerToni"];
+const CP=[[27,1,2],[27,3,4],[28,1,3],[28,2,4],[29,1,4],[29,2,3],[30,2,1],[30,4,3],[31,3,1],[31,4,2],[32,4,1],[32,3,2]];
+const GP=[[27,1,2],[27,1,5],[27,3,4],[28,2,1],[28,2,3],[28,4,5],[29,3,2],[29,3,4],[29,1,5],[30,4,5],[30,4,2],[30,1,3],[31,5,3],[31,5,2],[31,1,4]];
+const FP=[[32,2,3],[32,4,5],[33,2,4],[33,3,5],[34,2,5],[34,3,4]];
+const REWARDS=["300 €","100 €","50 €","–","–","Salate & Baguette","Salate & Baguette","Grillfeier*","Grillfeier*"];
+const DEMO={names:NAMES.slice(),hr:[1912,1876,1850,1803,1771,1764,1702,1688,1645],
+  scores:{C1:[62,48],C2:[55,71],C3:[58,58],C4:[49,66],G1:[51,44],G2:[63,57],G3:[40,52],G4:[59,61],G5:[47,47],G6:[70,38]}};
+
+/* ===== Hilfsfunktionen ===== */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+let data=null,C=null,demo=false,view="home",tabT="c",spF="all",me=null,lastJSON="",updated=null;
+
+function num(v){v=String(v??"").trim();if(!v)return null;v=v.replace(/[.\s]/g,"").replace(",",".");const n=Number(v);return isFinite(n)?n:null}
+function parseCSV(t){const rows=[];let row=[],f="",q=false;for(let i=0;i<t.length;i++){const c=t[i];
+  if(q){if(c=='"'){if(t[i+1]=='"'){f+='"';i++}else q=false}else f+=c}
+  else if(c=='"')q=true;else if(c==","){row.push(f);f=""}else if(c=="\n"){row.push(f);rows.push(row);row=[];f=""}else if(c!="\r")f+=c}
+  row.push(f);rows.push(row);return rows}
+function toData(rows){
+  const norm=s=>String(s||"").trim().toLowerCase();
+  const hi=rows.findIndex(r=>r.some(c=>norm(c)==="nr"));if(hi<0)throw new Error("Kopfzeile fehlt");
+  const H=rows[hi].map(norm),ci=k=>H.findIndex(h=>h.startsWith(k));
+  const cN=ci("nr"),cName=ci("paarung"),cA=ci("punkte a"),cB=ci("punkte b");
+  const d={names:NAMES.slice(),hr:Array(9).fill(null),scores:{}};
+  rows.slice(hi+1).forEach(r=>{const id=String(r[cN]||"").trim().toUpperCase();if(!id)return;
+    if(id[0]==="H"){const i=parseInt(id.slice(1),10)-1;if(i>=0&&i<9){const n=String(r[cName]||"").trim();if(n)d.names[i]=n;d.hr[i]=num(r[cA])}}
+    else d.scores[id]=[num(r[cA]),num(r[cB])]});
+  return d}
+
+/* ===== Berechnung ===== */
+function table(pl,ds,carry){
+  const rows=pl.map(p=>{const c=carry&&carry(p);return{p,sp:c?c.sp:0,w:c?c.w:0,d:c?c.d:0,l:c?c.l:0,pts:c?c.pts:0,sc:c?c.sc:0}});
+  const R=p=>rows.find(r=>r.p===p);
+  ds.forEach(x=>{if(!x.s)return;const A=R(x.a),B=R(x.b);A.sp++;B.sp++;A.sc+=x.s[0];B.sc+=x.s[1];
+    if(x.s[0]>x.s[1]){A.w++;B.l++;A.pts+=3}else if(x.s[1]>x.s[0]){B.w++;A.l++;B.pts+=3}else{A.d++;B.d++;A.pts++;B.pts++}});
+  const h2h=(a,b)=>{let s=0;ds.forEach(x=>{if(!x.s)return;if(x.a===a&&x.b===b)s+=Math.sign(x.s[0]-x.s[1]);else if(x.a===b&&x.b===a)s+=Math.sign(x.s[1]-x.s[0])});return s};
+  return rows.sort((x,y)=>y.pts-x.pts||y.sc-x.sc||-h2h(x.p,y.p)||((y.p.hr||0)+y.sc)-((x.p.hr||0)+x.sc)||pl.indexOf(x.p)-pl.indexOf(y.p))}
+function compute(d){
+  const P=d.names.map((n,i)=>({i,name:n,hr:d.hr[i]}));
+  const hrDone=d.hr.some(v=>v!=null);
+  const seeds=[...P].sort((a,b)=>(b.hr??-1)-(a.hr??-1)||a.i-b.i);
+  const champ=seeds.slice(0,4),grill=seeds.slice(4,9);
+  const res=id=>{const s=d.scores[id];return s&&s[0]!=null&&s[1]!=null?s:null};
+  const D=[];
+  CP.forEach((p,k)=>D.push({id:"C"+(k+1),sp:p[0],g:"C",stage:"Gruppenphase",a:champ[p[1]-1],b:champ[p[2]-1],as:"Platz "+p[1],bs:"Platz "+p[2],s:res("C"+(k+1))}));
+  GP.forEach((p,k)=>D.push({id:"G"+(k+1),sp:p[0],g:"G",stage:"Gruppenphase",a:grill[p[1]-1],b:grill[p[2]-1],as:"Platz "+(p[1]+4),bs:"Platz "+(p[2]+4),s:res("G"+(k+1))}));
+  const cStand=table(champ,D.filter(x=>x.id[0]==="C"));
+  const [r1,r2,r3,r4]=cStand.map(x=>x.p);
+  [["F1",33,r1,r2,"Finale · Hinspiel"],["F2",34,r2,r1,"Finale · Rückspiel"],["F3",33,r3,r4,"Spiel um Platz 3 · Hinspiel"],["F4",34,r4,r3,"Spiel um Platz 3 · Rückspiel"]]
+    .forEach(f=>D.push({id:f[0],sp:f[1],g:"C",stage:f[4],a:f[2],b:f[3],s:res(f[0])}));
+  const gD=D.filter(x=>x.id[0]==="G"),gStand=table(grill,gD);
+  const excluded=gStand[0].p,remain=gStand.slice(1).map(x=>x.p);
+  FP.forEach((p,k)=>D.push({id:"S"+(k+1),sp:p[0],g:"G",stage:"Schlussrunde",a:remain[p[1]-2],b:remain[p[2]-2],as:"Gruppen-Platz "+p[1],bs:"Gruppen-Platz "+p[2],s:res("S"+(k+1))}));
+  const sD=D.filter(x=>x.id[0]==="S"),sStand=table(remain,sD,p=>gStand.find(x=>x.p===p));
+  const fd=id=>D.find(x=>x.id===id),agg=(h,r)=>h.s&&r.s?[h.s[0]+r.s[1],h.s[1]+r.s[0]]:null;
+  const mA=agg(fd("F1"),fd("F2")),pA=agg(fd("F3"),fd("F4"));
+  const ord=(A,x,y)=>!A||A[0]>=A[1]?[x,y]:[y,x];
+  const final=[...ord(mA,r1,r2),...ord(pA,r3,r4),excluded,...sStand.map(x=>x.p)];
+  const open=D.filter(x=>!x.s);
+  const nextSp=hrDone&&open.length?Math.min(...open.map(x=>x.sp)):null;
+  return{hrDone,seeds,duels:D,cStand,gStand,sStand,excluded,final,nextSp,
+    done:hrDone&&!open.length,gDone:gD.every(x=>x.s),finalDone:!!(mA&&pA)&&sD.every(x=>x.s)}}
+
+/* ===== Bausteine ===== */
+const isMe=p=>me&&p&&p.name===me;
+const nm=p=>`<span class="pn${isMe(p)?" me":""}">${esc(p.name)}</span>`;
+const seg=(o,cur,fn)=>`<div class="seg" role="tablist">${o.map(([k,l])=>`<button class="${k===cur?"on":""}" onclick="${fn}('${k}')">${l}</button>`).join("")}</div>`;
+const phaseOf=sp=>sp<=31?"Playoffs · Gruppenphase":sp===32?"Letzter Gruppenspieltag oben · Schlussrunde unten":"Finale oben · Schlussrunde unten";
+const grillTag=r=>r===5?'<span class="chip ci">Safe</span>':r<=7?'<span class="chip cn">Salate</span>':'<span class="chip cg">Grillfeier</span>';
+function card(x,i){
+  const w=x.s?(x.s[0]>x.s[1]?"a":x.s[1]>x.s[0]?"b":"d"):null,mine=isMe(x.a)||isMe(x.b);
+  return `<article class="card match rv${mine?" mine":""}" style="--d:${Math.min(i,8)*45}ms">
+    <div class="m-meta"><span class="chip ${x.g==="C"?"cg":"ci"}">${x.g==="C"?"Championship":"Grillfest"}</span><span class="m-stage">${x.stage}</span><span class="m-id">#${x.id}</span></div>
+    <div class="m-row">
+      <div class="m-side ${w==="a"?"w":w==="b"?"l":""}">${nm(x.a)}${x.as?`<small>${x.as}</small>`:""}</div>
+      ${x.s?`<div class="m-score num">${x.s[0]}<i>:</i>${x.s[1]}</div>`:'<div class="m-vs">vs</div>'}
+      <div class="m-side r ${w==="b"?"w":w==="a"?"l":""}">${nm(x.b)}${x.bs?`<small>${x.bs}</small>`:""}</div>
+    </div>${w==="d"?'<div class="m-foot">Unentschieden · je 1 Punkt</div>':""}</article>`}
+function mini(title,cls,sub,rows,start,tag){
+  return `<div class="card mini rv"><h3><span class="chip ${cls}">${title}</span><span>${sub}</span></h3>${rows.map((r,i)=>
+    `<div class="mrow${isMe(r.p)?" me-row":""}"><span class="rk${start+i===1?" g1":""}">${start+i}</span>${nm(r.p)}${tag(start+i)}<span class="pts num">${r.v}</span></div>`).join("")}</div>`}
+function full(rows,start,cut){
+  return `<div class="card tbl rv"><div class="th"><span>#</span><span>Name</span><span class="c">Sp</span><span class="c">S</span><span class="c">U</span><span class="c">N</span><span class="p">Pkt</span></div>${rows.map((r,i)=>
+    `<div class="tr${cut(i)?" cut":""}${isMe(r.p)?" me":""}"><span class="rk${start+i===1?" g1":""}">${start+i}</span><span class="nm">${nm(r.p)}</span><span class="c num">${r.sp}</span><span class="c num">${r.w}</span><span class="c num">${r.d}</span><span class="c num">${r.l}</span><span class="p num">${r.pts}</span></div>`).join("")}</div>`}
+const emptyHR=`<div class="card empty rv"><b>Hauptrunde läuft</b>Sobald der Stand nach Spieltag 26 eingetragen ist, erscheinen hier die Playoffs.</div>`;
+
+/* ===== Ansichten ===== */
+function vHome(){
+  if(!C.hrDone)return `<section class="hero rv"><div class="h-eb"><span class="dot"></span>Hauptrunde läuft</div><div class="h-big">1–26</div><div class="h-phase">Nach dem 26. Spieltag wird die Tabelle geteilt – dann starten hier die Playoffs.</div></section>
+    <h2 class="sh">Neu in dieser Saison</h2><div class="card txt rv"><p>Oben geht’s ums Preisgeld, unten darum, wer das Grillfest organisiert.</p><button class="link" onclick="go('regeln')">Regeln & Format ansehen →</button></div>`;
+  let h="";
+  if(C.done){
+    h=`<section class="hero rv"><div class="h-eb">Saison beendet</div><div class="h-big" style="font-size:42px">${esc(C.final[0].name)}</div><div class="h-phase">ist Meister der Liga Wolfsrudel. Glückwunsch!</div></section>`;
+  }else{
+    const sp=C.nextSp,pct=Math.round((sp-1)/34*100);
+    let mine="";
+    if(me){
+      const md=C.duels.find(x=>x.sp===sp&&(isMe(x.a)||isMe(x.b)));
+      if(md){const opp=isMe(md.a)?md.b:md.a,n=C.duels.filter(x=>x.sp===sp&&(isMe(x.a)||isMe(x.b))).length;
+        mine=`<div class="mine-box"><small>Dein Duell${n>1?"e":""}</small>Du gegen <b>${esc(opp.name)}</b>${n>1?" + 1 weiteres":""} · ${md.g==="C"?"Championship":"Grillfest"}</div>`}
+      else if(isMe(C.excluded)&&sp>=32)mine=`<div class="mine-box"><small>Dein Status</small>Du bist <b>safe</b> – kein Duell, nichts zu organisieren.</div>`;
+      else mine=`<div class="mine-box"><small>Dein Status</small>Kein Duell an diesem Spieltag.</div>`;
+    }
+    h=`<section class="hero rv"><div class="h-eb"><span class="dot"></span>Nächster Spieltag</div>
+      <div class="h-big num"><span data-count="${sp}">${sp}</span><small>/ 34</small></div><div class="h-phase">${phaseOf(sp)}</div>
+      <div class="prog"><div data-w="${pct}"></div></div><div class="progl"><span>Saisonfortschritt</span><span class="num">${pct} %</span></div>${mine}</section>
+      <h2 class="sh">Duelle am ${sp}. Spieltag <button class="link" onclick="go('spiele')">Alle Spiele →</button></h2>
+      ${C.duels.filter(x=>x.sp===sp).sort((a,b)=>a.g<b.g?-1:a.g>b.g?1:0).map(card).join("")}`;
+  }
+  const gRows=C.gDone?[{p:C.excluded,v:C.gStand[0].pts},...C.sStand.map(r=>({p:r.p,v:r.pts}))]:C.gStand.map(r=>({p:r.p,v:r.pts}));
+  h+=`<h2 class="sh">Auf einen Blick <button class="link" onclick="go('tabellen')">Tabellen →</button></h2><div class="grid2">
+    ${mini("Championship","cg","Punkte",C.cStand.map(r=>({p:r.p,v:r.pts})),1,r=>r<=2?'<span class="chip cg">Finale</span>':"")}
+    ${mini("Grillfest","ci",C.gDone?"Schlussrunde":"Gruppenphase",gRows,5,grillTag)}</div>
+    <p class="upd">${demo?"Demo-Daten · ":""}Aktualisiert ${updated?updated.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"}):""} Uhr</p>`;
+  return h}
+function vSpiele(){
+  let h=`<h1 class="pt">Spiele</h1><p class="pl">Alle Playoff-Duelle von Spieltag 27 bis 34.</p>`;
+  if(!C.hrDone)return h+emptyHR;
+  h+=seg([["all","Alle"],["C","Championship"],["G","Grillfest"]],spF,"setSpF");
+  for(let sp=27;sp<=34;sp++){
+    const ds=C.duels.filter(x=>x.sp===sp&&(spF==="all"||x.g===spF));if(!ds.length)continue;
+    const pl=ds.filter(x=>x.s).length;
+    const st=pl===ds.length?'<span class="chip cn">Gespielt</span>':sp===C.nextSp?'<span class="chip cg">Als Nächstes</span>':pl?'<span class="chip cn">Läuft</span>':'<span class="chip cn">Offen</span>';
+    h+=`<div class="day" id="sp${sp}"><b>Spieltag ${sp}</b><span class="ln"></span>${st}</div>${ds.map(card).join("")}`}
+  return h}
+function vTab(){
+  let h=`<h1 class="pt">Tabellen</h1><p class="pl">Live-Stand aller Gruppen.</p>`+seg([["hr","Hauptrunde"],["c","Championship"],["g","Grillfest"],["end","Endstand"]],tabT,"setTab");
+  if(!C.hrDone)return h+emptyHR;
+  if(tabT==="hr")h+=`<div class="card tbl t2 rv"><div class="th"><span>#</span><span>Name</span><span>Gruppe</span><span class="p">Punkte</span></div>${C.seeds.map((p,i)=>
+    `<div class="tr${i===4?" cut":""}${isMe(p)?" me":""}"><span class="rk${i===0?" g1":""}">${i+1}</span><span class="nm">${nm(p)}</span><span>${i<4?'<span class="chip cg">Champ.</span>':'<span class="chip ci">Grill</span>'}</span><span class="p num">${p.hr??"–"}</span></div>`).join("")}</div>
+    <div class="note">Stand nach Spieltag 26. <b>Platz 1–4</b> → Championship, <b>Platz 5–9</b> → Grillfest.</div>`;
+  if(tabT==="c")h+=full(C.cStand,1,i=>i===2)+`<div class="note"><b>Platz 1 & 2</b> spielen am 33./34. Spieltag um die Meisterschaft, <b>Platz 3 & 4</b> um Platz 3.</div>`;
+  if(tabT==="g")h+=`<h2 class="sh">Gruppenphase · Spieltag 27–31</h2>${full(C.gStand,5,i=>i===1)}
+    <div class="note"><b>Platz 1</b> der Gruppe (Gesamtplatz 5) ist raus und muss nichts organisieren.</div>
+    <h2 class="sh">Schlussrunde · Spieltag 32–34</h2>${full(C.sStand,6,i=>i===2)}
+    <div class="note">Punkte aus der Gruppenphase zählen mit. <b>Platz 6 & 7</b> bringen Salate & Baguette, <b>Platz 8 & 9</b> organisieren die Grillfeier.</div>`;
+  if(tabT==="end"){const F=C.final;
+    h+=(C.finalDone?"":`<div class="note">Vorläufiger Stand – endgültig nach Spieltag 34.</div>`)+
+    `<div class="podium">${[1,0,2].map(i=>`<div class="card pod p${i+1} rv" style="--d:${i*80}ms"><div class="medal m${i+1}">${i+1}</div>${nm(F[i])}<div class="rw">${REWARDS[i]}</div></div>`).join("")}</div>
+    <div class="card tbl t3 rv"><div class="th"><span>#</span><span>Name</span><span>Ergebnis</span></div>${F.slice(3).map((p,k)=>{const r=k+4;
+      return `<div class="tr${r===6?" cut":""}${isMe(p)?" me":""}"><span class="rk">${r}</span><span class="nm">${nm(p)}</span><span>${r<=5?'<span class="chip cn">Nichts</span>':r<=7?'<span class="chip ci">Salate & Baguette</span>':'<span class="chip cg">Grillfeier*</span>'}</span></div>`}).join("")}</div>
+    <div class="note">*Location, Grill, Getränke und Essen (ohne Salat und Baguette) stellen und für einen reibungslosen Ablauf sorgen.</div>`}
+  return h}
+function vRegeln(){
+  return `<h1 class="pt">Regeln & Format</h1><p class="pl">Nach 26 Spieltagen wird geteilt: Oben kämpft man ums Preisgeld, unten darum, wer <b>nicht</b> Salate, Baguettes und Location organisieren muss.</p>
+  <div class="card txt rv"><div class="tline"><span style="flex:26;background:var(--surface-2)"></span><span style="flex:6;background:var(--gold-soft)"></span><span style="flex:2;background:var(--gold)"></span></div>
+    <div class="tlab"><span>1–26 Hauptrunde</span><span>27–32 Playoffs</span><span>33–34 Finale</span></div></div>
+  <div class="steps">
+    <div class="card step rv"><span class="n">1</span><div><b>Hauptrunde</b><span>Spieltag 1–26 wie gewohnt. Danach wird die Tabelle geteilt.</span></div></div>
+    <div class="card step rv" style="--d:60ms"><span class="n">2</span><div><b>Playoffs</b><span>Ab Spieltag 27 direkte Duelle: Platz 1–4 in der Championship, Platz 5–9 im Grillfest. Wer am Spieltag mehr Punkte holt, gewinnt.</span></div></div>
+    <div class="card step rv" style="--d:120ms"><span class="n">3</span><div><b>Entscheidung</b><span>Spieltag 33–34: Finale oben, Schlussrunde unten. Danach stehen Preise und Grillfest-Orga fest.</span></div></div>
+  </div>
+  <h2 class="sh">Championship · Platz 1–4</h2><div class="card txt rv"><ul>
+    <li>Spieltag 27–32: jeder zweimal gegen jeden, 2 Duelle pro Spieltag.</li>
+    <li>Spieltag 33–34: Finale mit Hin- und Rückspiel – 1 vs. 2 um die Meisterschaft, 3 vs. 4 um Platz 3.</li></ul></div>
+  <h2 class="sh">Grillfest · Platz 5–9</h2><div class="card txt rv"><ul>
+    <li>Spieltag 27–31: jeder spielt 6 Duelle. An jedem Spieltag spielt einer doppelt, damit niemand aussetzt.</li>
+    <li>Nach Spieltag 31 ist Platz 1 der Gruppe raus (Gesamtplatz 5) und muss nichts organisieren.</li>
+    <li>Spieltag 32–34: Schlussrunde der übrigen 4, jeder gegen jeden. Punkte aus der Gruppenphase bleiben erhalten.</li></ul></div>
+  <h2 class="sh">Punktesystem</h2><div class="card txt rv"><ul>
+    <li>Beide Gruppen starten die Playoffs bei 0 Punkten.</li>
+    <li>Sieg im direkten Duell = 3 Punkte, Unentschieden = 1 Punkt für beide.</li>
+    <li>Bei Punktgleichheit entscheidet: Gesamtpunkte aus den Playoff-Spieltagen / Direkter Vergleich / Gesamtpunkte der Saison (Hauptrunde + Playoffs).</li></ul></div>
+  <h2 class="sh">Preise & Pflichten</h2><div class="card tbl t3 rv"><div class="th"><span>#</span><span>Platz</span><span></span></div>
+    ${REWARDS.map((r,i)=>`<div class="tr"><span class="rk${i===0?" g1":""}">${i+1}</span><span>${i<4?"Championship":"Grillfest"}</span><span class="p">${r==="–"?"nichts":r}</span></div>`).join("")}</div>
+  <div class="note">*Location, Grill, Getränke und Essen (ohne Salat und Baguette) stellen und für einen reibungslosen Ablauf sorgen.</div>`}
+
+/* ===== Rendering & Effekte ===== */
+const io=("IntersectionObserver" in window)&&!reduce?new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{rootMargin:"0px 0px -6% 0px"}):null;
+function fx(){
+  document.querySelectorAll(".rv").forEach(el=>io?io.observe(el):el.classList.add("in"));
+  document.querySelectorAll("[data-w]").forEach(el=>requestAnimationFrame(()=>requestAnimationFrame(()=>{el.style.width=el.dataset.w+"%"})));
+  document.querySelectorAll("[data-count]").forEach(el=>{const to=+el.dataset.count;if(reduce)return;
+    const from=Math.max(1,to-12),t0=performance.now();
+    const st=n=>{const k=Math.min(1,(n-t0)/800),e=1-Math.pow(1-k,3);el.textContent=Math.round(from+(to-from)*e);if(k<1)requestAnimationFrame(st)};requestAnimationFrame(st)})}
+const skeleton=`<div class="sk" style="height:220px"></div><div class="sk" style="height:22px;width:45%;margin:30px 0 12px"></div><div class="sk" style="height:96px;margin-bottom:10px"></div><div class="sk" style="height:96px"></div>`;
+function render(top){
+  document.querySelectorAll(".tabbtn").forEach(b=>b.classList.toggle("on",b.dataset.v===view));
+  updMe();
+  if(!C&&view!=="regeln"){$("#view").innerHTML=skeleton;return}
+  const h=view==="home"?vHome():view==="spiele"?vSpiele():view==="tabellen"?vTab():vRegeln();
+  $("#view").innerHTML=`<div class="view-in">${h}</div>`;
+  if(top)window.scrollTo(0,0);
+  fx();
+  if(view==="spiele"&&top&&C&&C.nextSp>27){const el=document.getElementById("sp"+C.nextSp);if(el)setTimeout(()=>el.scrollIntoView({behavior:reduce?"auto":"smooth"}),300)}}
+function route(){const v=(location.hash||"#home").slice(1);view=["home","spiele","tabellen","regeln"].includes(v)?v:"home";render(true)}
+window.go=v=>{if(location.hash==="#"+v)render(true);else location.hash=v};
+window.setSpF=k=>{spF=k;render(false)};
+window.setTab=k=>{tabT=k;render(false)};
+window.addEventListener("hashchange",route);
+
+/* ===== Wer bist du? ===== */
+function updMe(){$("#mebtn").innerHTML=me?`<span class="av">${esc(me.slice(0,2).toUpperCase())}</span><span class="t">${esc(me)}</span>`:`<span class="av">?</span><span class="t">Wer bist du?</span>`}
+window.pickMe=()=>{
+  const names=(data||DEMO).names,ov=document.createElement("div");ov.className="ov";
+  ov.innerHTML=`<div class="sheet" role="dialog" aria-modal="true"><h2>Wer bist du?</h2><p>Dann heben wir deine Duelle und Platzierungen überall hervor.</p>
+    <div class="names">${names.map((n,i)=>`<button class="${n===me?"on":""}" onclick="setMe(${i})">${esc(n)}</button>`).join("")}</div>
+    <button class="skip" onclick="setMe(-1)">Ohne Auswahl weiter</button></div>`;
+  ov.addEventListener("click",e=>{if(e.target===ov)setMe(me?(data||DEMO).names.indexOf(me):-1)});
+  document.body.appendChild(ov)};
+window.setMe=i=>{const names=(data||DEMO).names;me=i<0?null:names[i];ls.set("wr-me",me||"-");document.querySelectorAll(".ov").forEach(o=>o.remove());render(false)};
+
+/* ===== Laden ===== */
+async function load(first){
+  let d=null;
+  if(!SHEET_URL){d=DEMO;demo=true}
+  else{try{const r=await fetch(SHEET_URL+(SHEET_URL.includes("?")?"&":"?")+"_="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error(r.status);d=toData(parseCSV(await r.text()))}catch(e){d=null}}
+  if(!d){if(!data&&view!=="regeln")$("#view").innerHTML=`<div class="card empty"><b>Daten konnten nicht geladen werden</b>Bitte Verbindung prüfen und neu laden.<br><button class="btn" onclick="load(true)">Erneut versuchen</button></div>`;return}
+  updated=new Date();
+  const j=JSON.stringify(d);if(j===lastJSON&&!first)return;lastJSON=j;
+  data=d;C=compute(d);
+  if(me&&!d.names.includes(me))me=null;
+  $("#demo").hidden=!demo;
+  render(!!first);
+  if(first&&ls.get("wr-me")===null)setTimeout(window.pickMe,700)}
+window.load=load;
+
+const saved=ls.get("wr-me");me=saved&&saved!=="-"?saved:null;
+view=["home","spiele","tabellen","regeln"].includes((location.hash||"#home").slice(1))?(location.hash||"#home").slice(1):"home";
+render(true);
+load(true);
+setInterval(()=>load(false),120000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)load(false)});
+</script>
+</body>
+</html>
