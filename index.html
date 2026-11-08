@@ -493,7 +493,7 @@ main{max-width:720px;margin:0 auto;padding:18px 16px 120px}
 <script>
 /* ===== Einstellungen ===== */
 // Hier den veröffentlichten CSV-Link aus Google Sheets einfügen. Leer = Demo-Daten.
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQyxykCe_uyoub-MfphgduL_PIb6K8f3sqSA8ROyS4ZzTNwOpJgdG_94HGgKy9Faw/pub?gid=861806017&single=true&output=csv";
+const SHEET_URL = "";
 
 const NAMES=["dergruene","Kuehles1860","McCharls","HeftigerChris","waibelmane","Domi1993","Moe25","Simmal","HimbeerToni"];
 const CP=[[27,1,2],[27,3,4],[28,1,3],[28,2,4],[29,1,4],[29,2,3],[30,2,1],[30,4,3],[31,3,1],[31,4,2],[32,4,1],[32,3,2]];
@@ -672,6 +672,15 @@ const GRILL={
   stay:["🏮 {p} hält die rote Laterne – seit {n} am Tabellenende.","🔥 {p} bleibt Schlusslicht. Die Grillzange liegt schon bereit.","🌭 {p} weiter ganz unten – vielleicht schon mal Kohle bestellen?"],
   start:["🏮 {p} startet als Schlusslicht ins Grillfest.","🌭 {p} macht den Anfang am Tabellenende – noch ist alles drin.","🔥 Erster Spieltag, erstes Schlusslicht: {p}."],
   done:["🍖 {p} und {q} laden zur Grillfeier – guten Appetit!","🔥 Die Grillmeister der Saison: {p} und {q}. Wir haben Hunger!","🌭 {p} und {q} schmeißen den Grill an. Prost, Rudel!"]};
+// Vorfreude vor den Playoffs: Spruch wechselt täglich
+const PRE={
+  hr:["🔥 Noch läuft die Hauptrunde – aber irgendwo wird schon die Grillzange poliert.","🌭 Nach Spieltag 26 wird’s heiß: Fünf müssen ins Grillfest. Wer zittert schon?","♨️ Die Kohle liegt bereit. Ab Spieltag 27 wird gegrillt – fragt sich nur, wer."],
+  split:["🔥 Die Grillfest-Gruppe steht: {n}. Ab Spieltag 27 ({d}) geht’s um die Grillzange.","🌭 {p} geht als Letzter der Hauptrunde ins Grillfest – noch ist die Kohle nicht angezündet.","♨️ Alles auf null: {p} und {q} starten ganz unten – aber 15 Duelle können noch viel drehen."]};
+function preLine(){
+  const day=Math.floor(Date.now()/864e5),hr=!C.hrDone,pool=hr?PRE.hr:PRE.split;
+  const g=C.seeds.slice(4),v={n:g.map(nm).join(", ").replace(/, ([^,]*)$/," und $1"),d:DATES[27],p:nm(g[4]),q:nm(g[3])};
+  const txt=pool[day%pool.length].replace(/\{(\w+)\}/g,(m,k)=>v[k]);
+  return `<p class="gline rv"><span class="gl-k">Grill-News · ${hr?"Hauptrunde":"Vor dem Start"}</span>${txt}</p>`}
 function grillLine(sp){
   const tbl=c=>sp<=31||!c.gDone?c.gStand:c.sStand;
   let t,v;
@@ -710,7 +719,7 @@ const emptyHR=`<div class="card empty rv"><b>Hauptrunde läuft</b>Sobald der Sta
 
 /* ===== Ansichten ===== */
 function vHome(){
-  if(!C.hrDone)return `<section class="hero rv"><div class="h-eb"><span class="dot"></span>Hauptrunde läuft</div><div class="h-big">1–26</div><div class="h-phase">Nach dem 26. Spieltag wird die Tabelle geteilt – dann starten hier die Playoffs.</div></section>
+  if(!C.hrDone)return preLine()+`<section class="hero rv"><div class="h-eb"><span class="dot"></span>Hauptrunde läuft</div><div class="h-big">1–26</div><div class="h-phase">Nach dem 26. Spieltag wird die Tabelle geteilt – dann starten hier die Playoffs.</div></section>
     <h2 class="sh">Neu in dieser Saison</h2><div class="card txt rv"><p>Oben geht’s ums Preisgeld, unten darum, wer das Grillfest organisiert.</p><button class="link" onclick="go('regeln')">Regeln & Format ansehen →</button></div>`;
   let h="";
   if(C.done){
@@ -742,7 +751,7 @@ function vHome(){
   }
   h+=standCard();
   h+=`<p class="upd">${demo?"Demo-Daten · ":""}${lastDone?`Ergebnisse bis Spieltag ${lastDone}`:"Noch keine Playoff-Ergebnisse"} · abgerufen ${updated?updated.toLocaleTimeString("de-DE",{hour:"2-digit",minute:"2-digit"}):""} Uhr</p>`;
-  const gl=lastDone?grillLine(lastDone):"",ik=h.indexOf("</section><!--/intro-->");
+  const gl=lastDone?grillLine(lastDone):C.done?"":preLine(),ik=h.indexOf("</section><!--/intro-->");
   return ik>0?h.slice(0,ik)+gl+h.slice(ik):gl+h}
 function standCard(){
   const link=`<button class="link" onclick="go('tabellen')">Alle Tabellen →</button>`;
